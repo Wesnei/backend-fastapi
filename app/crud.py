@@ -22,3 +22,9 @@ def update_item(db: Session, item_id: int, item: schemas.CursoUpdate):
             db.commit()
             db.refresh(db_item)
         return db_item
+
+def delete_item(db: Session, item_id: int):
+    db_item = db.query(models.Curso).filter(models.Curso.id == item_id).first()
+    if db_item:
+        db.delete(db_item)
+        db.commit()

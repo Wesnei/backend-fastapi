@@ -56,3 +56,17 @@ def update_curso(curso_id: int, curso: schemas.CursoUpdate, db: Session = Depend
     except Exception as e:
         logger.error(f"Erro inesperado: {e}")
         raise HTTPException(status_code=500, detail="Erro inesperado ao atualizar o curso.")
+
+@router.delete("/{curso_id}")
+def delete_curso(curso_id: int, db: Session = Depends(get_db)):
+    try:
+        db_curso = crud.get_item(db, item_id=curso_id)
+        if db_curso is None:
+            raise HTTPException(status_code=404, detail="Curso não encontrado")
+
+        crud.delete_item(db=db, item_id=curso_id)
+        return {"detail": "Curso removido com sucesso"}
+    except Exception as e:
+        logger.error(f"Erro inesperado: {e}")
+        raise HTTPException(status_code=500, detail="Erro inesperado ao remover o curso.")
+
