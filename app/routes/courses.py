@@ -43,3 +43,16 @@ def create_curso(curso: schemas.CursoCreate, db: Session = Depends(get_db)):
     except Exception as e:
         logger.error(f"Erro inesperado: {e}")
         raise HTTPException(status_code=500, detail="Erro inesperado ao criar o curso.")
+
+@router.put("/{curso_id}", response_model=schemas.Curso)
+def update_curso(curso_id: int, curso: schemas.CursoUpdate, db: Session = Depends(get_db)):
+    try:
+        db_curso = crud.get_item(db, item_id=curso_id)
+        if db_curso is None:
+            raise HTTPException(status_code=404, detail="Curso não encontrado")
+
+        updated_curso = crud.update_item(db=db, item_id=curso_id, item=curso)
+        return updated_curso
+    except Exception as e:
+        logger.error(f"Erro inesperado: {e}")
+        raise HTTPException(status_code=500, detail="Erro inesperado ao atualizar o curso.")
