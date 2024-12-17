@@ -81,7 +81,7 @@ DATABASE_URL=postgresql://nome_do_usuario:sua_senha@localhost/nome_do_banco
 Após configurar o ambiente e as dependências, inicie o servidor da API com o seguinte comando:
 
 ```bash
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 A API estará disponível localmente em `http://localhost:8000`. O parâmetro `--reload` permite que as mudanças no código sejam automaticamente aplicadas durante o desenvolvimento.
