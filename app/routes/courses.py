@@ -69,4 +69,3 @@ def delete_curso(curso_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         logger.error(f"Erro inesperado: {e}")
         raise HTTPException(status_code=500, detail="Erro inesperado ao remover o curso.")
-

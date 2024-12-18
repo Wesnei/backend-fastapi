@@ -8,11 +8,6 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(debug=True)
 
 app.include_router(courses.router, prefix="/cursos", tags=["Cursos"])
-app.include_router(courses.router, prefix="/alunos", tags=["Aluno"])
-app.include_router(courses.router, prefix="/professores", tags=["Professor"])
-
-
-
 
 @app.get("/")
 def welcome_message():
