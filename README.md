@@ -1,4 +1,4 @@
-# 👨🏻‍💻 Projeto FastAPI: API de Gerenciamento de Cursos, Alunos e Professores
+# 👨🏻‍💻 Projeto FastAPI: API de Gerenciamento de Cursos
 
 ## 📄 Descrição do Projeto
 Esta API, desenvolvida utilizando **FastAPI**, oferece uma plataforma robusta e eficiente para gerenciar um catálogo de **cursos**, **alunos** e **professores**. Com suporte completo para operações **CRUD** (Create, Read, Update, Delete), a API permite realizar as seguintes operações:
