@@ -1,4 +1,4 @@
-# 👨🏻‍💻 Projeto FastAPI: API de Gerenciamento de Cursos, Alunos e Professores
+# 👨🏻‍💻 Projeto FastAPI: API de Gerenciamento de Cursos
 
 ## 📄 Descrição do Projeto
 Esta API, desenvolvida utilizando **FastAPI**, oferece uma plataforma robusta e eficiente para gerenciar um catálogo de **cursos**, **alunos** e **professores**. Com suporte completo para operações **CRUD** (Create, Read, Update, Delete), a API permite realizar as seguintes operações:
@@ -94,18 +94,6 @@ Use o **Postman** ou qualquer outra ferramenta de API para testar as rotas da ap
 - **POST /cursos** – Adicionar um novo curso.
 - **PUT /cursos/{id}** – Atualizar um curso existente.
 - **DELETE /cursos/{id}** – Deletar um curso específico.
-
-### **Rotas de Alunos**  
-- **GET /alunos** – Listar todos os alunos cadastrados.
-- **POST /alunos** – Adicionar um novo aluno.
-- **PUT /alunos/{id}** – Atualizar as informações de um aluno.
-- **DELETE /alunos/{id}** – Deletar um aluno específico.
-
-### **Rotas de Professores**  
-- **GET /professores** – Listar todos os professores cadastrados.
-- **POST /professores** – Adicionar um novo professor.
-- **PUT /professores/{id}** – Atualizar as informações de um professor.
-- **DELETE /professores/{id}** – Deletar um professor específico.
 
 ## 📄 Contribuição
 Sinta-se à vontade para contribuir com melhorias ou correções. Para isso, siga os passos abaixo:
