@@ -66,7 +66,7 @@ Se você deseja rodar a aplicação com **Docker**, siga as instruções abaixo.
 #### **Dockerfile**
 
 ```Dockerfile
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
