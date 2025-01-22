@@ -17,6 +17,8 @@ Esta aplicação proporciona uma estrutura simples, mas poderosa, para um gerenc
 - **PostgreSQL** - Banco de dados relacional utilizado para armazenar os dados.
 - **Postman** - Ferramenta para testar as rotas da API durante o desenvolvimento.
 - **Docker** - Utilizado para containerizar a aplicação e o banco de dados.
+- **Jinja2** - Utilizado para criar templates na interface da API.
+
 
 ## 📦 Como Executar
 
