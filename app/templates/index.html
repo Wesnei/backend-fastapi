@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI com Jinja2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #4e555b;
+        }
+
+        h4 {
+            color: #343a40;
+        }
+
+        .table {
+            background-color: #ffffff;
+        }
+
+        th {
+            color: #495057;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+    </style>
+    <script>
+        let editCursoId = null; 
+
+        async function fetchCursos() {
+            try {
+                const response = await fetch("/cursos/");
+                const cursos = await response.json();
+                renderCursos(cursos);
+            } catch (error) {
+                console.error("Erro ao carregar cursos:", error);
+                document.getElementById("error").innerText = "Erro ao carregar cursos.";
+            }
+        }
+
+        async function addOrEditCurso() {
+            const name = document.getElementById("name").value;
+            const description = document.getElementById("description").value;
+            const time = document.getElementById("time").value;
+
+            try {
+                const method = editCursoId ? "PUT" : "POST";
+                const url = editCursoId ? `/cursos/${editCursoId}` : "/cursos/";
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, description, time: parseInt(time) }),
+                });
+
+                if (response.ok) {
+                    fetchCursos();
+                    clearForm();
+                } else {
+                    const errorData = await response.json();
+                    console.error("Erro ao salvar curso:", errorData.detail);
+                }
+            } catch (error) {
+                console.error("Erro ao salvar curso:", error);
+            }
+        }
+
+        async function deleteCurso(cursoId) {
+            try {
+                const response = await fetch(`/cursos/${cursoId}`, { method: "DELETE" });
+                if (response.ok) {
+                    fetchCursos();
+                } else {
+                    console.error("Erro ao deletar curso");
+                }
+            } catch (error) {
+                console.error("Erro ao deletar curso:", error);
+            }
+        }
+
+        function editCurso(curso) {
+            document.getElementById("name").value = curso.name;
+            document.getElementById("description").value = curso.description;
+            document.getElementById("time").value = curso.time;
+
+            editCursoId = curso.id; 
+            document.getElementById("submitButton").innerText = "Salvar Alterações";
+        }
+
+        function clearForm() {
+            document.getElementById("name").value = "";
+            document.getElementById("description").value = "";
+            document.getElementById("time").value = "";
+
+            editCursoId = null; 
+            document.getElementById("submitButton").innerText = "Adicionar";
+        }
+
+        function renderCursos(cursos) {
+            const tableBody = document.getElementById("cursosTableBody");
+            tableBody.innerHTML = "";
+
+            cursos.forEach((curso) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <th scope="row">${curso.id}</th>
+                    <td>${curso.name}</td>
+                    <td>${curso.description}</td>
+                    <td>${curso.time}</td>
+                    <td>
+                        <button class="btn btn-warning" onclick='editCurso(${JSON.stringify(curso)})'>Editar</button>
+                        <button class="btn btn-danger ms-1" onclick="deleteCurso(${curso.id})">Excluir</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchCursos);
+    </script>
+</head>
+<body>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-9 col-xl-7">
+                <div class="card rounded-3">
+                    <div class="card-body p-4">
+                        <h4 class="text-center my-3 pb-3">Lista de Cursos</h4>
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <input type="text" id="name" class="form-control" placeholder="Digite o nome do curso" required />
+                            </div>
+                            <div class="col-auto">
+                                <input type="text" id="description" class="form-control" placeholder="Digite a descrição do curso" required />
+                            </div>
+                            <div class="col-auto">
+                                <input type="number" id="time" class="form-control" placeholder="Duração (horas)" required />
+                            </div>
+                            <div class="col-auto">
+                                <button id="submitButton" onclick="addOrEditCurso()" class="btn btn-primary">Adicionar</button>
+                                <button onclick="clearForm()" class="btn btn-secondary">Cancelar</button>
+                            </div>
+                        </div>
+                        <table class="table mb-4 mt-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome do Curso</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Duração</th>
+                                    <th scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cursosTableBody"></tbody>
+                        </table>
+                        <div id="error" class="alert alert-danger" style="display:none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
